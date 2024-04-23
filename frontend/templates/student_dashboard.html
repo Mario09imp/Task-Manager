@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <link rel="stylesheet" href="/frontend/static/studentTheme.css">
+</head>
+<body>
+    <header>
+        <h1>Student Dashboard</h1>
+    </header>
+    <nav>
+        <ul>
+            <li><a href="#classes">Classes</a></li>
+            <li><a href="#reminders">Reminders</a></li>
+            <li><a href="#tasks">Tasks</a></li>
+            <li><a href="#profile">My Profile</a></li>
+        </ul>
+    </nav>
+    <section id="classes">
+        <h2>My Classes</h2>
+        <!-- Classes will be added here dynamically -->
+        <button id="dropClassButton">Drop Class</button>
+    </section>
+    <section id="reminders">
+        <h2>My Reminders</h2>
+        <button id="addReminderButton">Add Reminder</button>
+        <button id="editReminderButton">Edit Reminder</button>
+        <button id="deleteReminderButton">Delete Reminder</button>
+        <!-- Reminders will be added here dynamically -->
+    </section>
+    <section id="tasks">
+        <h2>My Tasks</h2>
+        <button id="addTaskButton">Add Task</button>
+        <button id="editTaskButton">Edit Task</button>
+        <button id="deleteTaskButton">Delete Task</button>
+        <!-- Tasks will be added here dynamically -->
+    </section>
+    <section id="profile">
+        <h2>My Profile</h2>
+        <form id="updateProfile">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName">
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <button type="submit">Update Profile</button>
+        </form>
+    </section>
+    <footer>
+        <p>Student Dashboard © 2024</p>
+    </footer>
+    <script src="dashboard.js"></script> <!-- Adjust the script name if necessary -->
+</body>
+</html>

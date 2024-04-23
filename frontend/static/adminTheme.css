@@ -1,0 +1,97 @@
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    justify-content: center;
+    padding-top: 20px;
+}
+
+/* Container to center the dashboard */
+.container {
+    width: 80%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 0 20px;
+}
+
+/* Styling for the dashboard sections */
+section {
+    background: #fff;
+    margin: 20px 0;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+h1, h2 {
+    padding: 10px 0;
+}
+
+/* Basic styles for the table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+
+table thead {
+    background-color: #333;
+    color: #fff;
+}
+
+table th, table td {
+    text-align: left;
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 0 10px;
+    }
+
+    table th, table td {
+        padding: 8px;
+        font-size: 14px; /* Smaller font size on smaller screens */
+    }
+
+    /* On smaller screens, make table scrollable horizontally */
+    .table-responsive {
+        overflow-x: auto;
+    }
+}
+
+/* Styles for form elements */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"],
+textarea,
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+button {
+    background-color: #5cb85c;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    opacity: 0.9;
+}

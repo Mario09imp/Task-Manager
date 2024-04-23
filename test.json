@@ -1,0 +1,25 @@
+
+{
+  "student1":
+  {
+    "studentID": 1,
+    "email_address": "student_1@dmail.com",
+    "firstName": "Annabel", "lastName": "Smith",
+    "className": "English 1"
+  },
+  "student2":
+  {
+    'studentID': 2,
+    'email_address': 'student_40@dmail.com',
+    'firstName': 'Robert', 'lastName': 'Phillips',
+    'className': 'English 1'
+  },
+  "student3":
+  {
+    'studentID': 4,
+    'email_address': 'student_50@dmail.com',
+    'firstName': 'Grecia', 'lastName': 'Rodriguez',
+    'className': 'English 1'
+  }
+
+}

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="/frontend/static/loginTheme.css">
+</head>
+<body>
+    <div class="form-container">
+        <form id="signInForm">
+            <h1>Sign In</h1>
+            <input type="email" id="email_address" placeholder="Email address" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Sign In</button>
+            <div class="secondary-options">
+                <input type="checkbox" id="rememberMe" name="rememberMe">
+                <label for="rememberMe">Remember me</label>
+                <a href="#">Need help?</a>
+            </div>
+            <div class="new-to-site">
+                <span>New to [Your Site]? <a href="#">Sign up now.</a></span>
+                <p>This page is protected by Google reCAPTCHA to ensure you're not a bot. <a href="#">Learn more.</a></p>
+            </div>
+        </form>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

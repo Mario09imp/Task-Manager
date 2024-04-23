@@ -1,0 +1,62 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #f0f4f8;
+    color: #333;
+}
+
+.form-container {
+    width: 60%; /* default to 60% of the window size */
+    max-width: 450px; /* maximum width of the form */
+    box-sizing: border-box; /* ensures padding doesn't affect width */
+}
+
+a:link {
+    color: #5cb85c; /* default link color */
+}
+
+a:visited {
+    color: #660099; /* color for visited links */
+}
+
+a:hover {
+    color: #FF9900; /* color when mouse hovers over the link */
+}
+
+a:active {
+    color: #FF0000; /* color when the link is clicked */
+}
+
+#signInForm {
+    width: 100%;
+    background: rgb(244, 244, 244);
+    padding: 60px;
+    border-radius: 4px;
+    box-shadow: 0 4px 60px rgba(0,0,0,0.5);
+    margin: 0 auto; /* ensures form stays centered */
+}
+
+/* ... rest of the styles ... */
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .form-container {
+        width: 60%; /* Adjust width to 60% for smaller screens */
+    }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+    .form-container {
+        width: 50%; /* Adjust width to 50% for medium screens */
+    }
+}
+
+@media (min-width: 1201px) {
+    .form-container {
+        width: 40%; /* Adjust width to 40% for large screens */
+    }
+}
