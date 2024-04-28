@@ -56,7 +56,7 @@ def get_students(teacherID: int, classID=None):
 
 def get_assignment(AssignmentID):
     """Query: Get Assignment by ID"""
-    assignment_query = supabase_client.from_("assignment").select("*").eq("assignmentid", AssignmentID)
+    assignment_query = supabase_client.from_("assignment").select("*").eq("assignmentID", AssignmentID)
     assignment_data = assignment_query.execute().get("data", [])
     if assignment_data:
         return assignment_data[0]
@@ -68,7 +68,7 @@ def create_assignment(ClassID: int, Title: str, Description: str, DueDate: datet
     """Query: Create New Assignment."""
     response = supabase_client.table('Assignment').insert(
         {
-            "classid": ClassID,
+            "classID": ClassID,
             "title": Title,
             "description": Description,
             "dueDate": DueDate
@@ -77,7 +77,7 @@ def create_assignment(ClassID: int, Title: str, Description: str, DueDate: datet
     if assignment_result["error"]:
         return None, assignment_result["error"]
     else:
-        AssignmentID = assignment_result["data"][0]["assignmentid"]
+        AssignmentID = assignment_result["data"][0]["assignmentID"]
         return AssignmentID, None
 
 
@@ -159,7 +159,7 @@ def add_student_to_reminder(reminderID: int, studentID: int):
 
 
 def remove_student_from_reminder(reminderID: int, studentID: int):
-    response = supabase_client.table('ClassStudents').delete().eq('reminderID', reminderID).eq('studentID', studentID).execute()
+    response = supabase_client.table('ReminderStudents').delete().eq('reminderID', reminderID).eq('studentID', studentID).execute()
     return response.data
 
 

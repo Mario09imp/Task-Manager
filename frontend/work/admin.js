@@ -12,6 +12,41 @@ export function getUsers() {
         });
 }
 
+export function getUserLogin(credential) {
+    const { password, userName, email_address } = credentials;
+    const url = 'http://localhost:5000/admin/get_user_login';
+
+    // Determine whether to use userName or email_address in the request
+    const loginData = {
+        password: password
+    };
+    if (userName) {
+        loginData.userName = userName;
+    } else if (email_address) {
+        loginData.email_address = email_address;
+    }
+
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(loginData)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Login failed, network response was not ok');
+        }
+        return response.json();
+    })
+    .then(user => {
+        console.log('Login successful:', user);
+        // Perform actions with the user data after successful login, e.g., redirection or session initiation
+    })
+    .catch(error => console.error('Error during login:', error));
+}
+
+
 export function createUser(userType, userData) {
     const url = `http://localhost:5000/admin/create_${userType.toLowerCase()}`;  // Make sure to provide the full URL
     fetch(url, {

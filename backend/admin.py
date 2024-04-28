@@ -13,18 +13,31 @@ def get_users():
             return response.data
 
 
-def create_student(userName:str, password:str, email_address:str, firstName:str, lastName:str):
-    response = supabase_client.table('Student').insert({
-        "userName": userName,
-        "password": password,
-        "email_address": email_address,
-        "firstName": firstName,
-        "lastName": lastName
-    }).execute()
-    if response.data is None:
-        print("Error while creating student", response.data)
+
+def get_user_login(password, userName=None, email_address=None):
+    # First, we check which field (userName or email_address) is provided to construct the query
+    if userName:
+        query = supabase_client.table('combined_users').select('*').eq('userName', userName).eq('password', password)
+    elif email_address:
+        query = supabase_client.table('combined_users').select('*').eq('email_address', email_address).eq('password', password)
     else:
-        print("Student created", response.data)
+        print("Error: No username or email address provided.")
+        return None
+
+    # Execute the query
+    response = query.execute()
+
+    # Check the response and handle data accordingly
+    if response.data:
+        print("User Found:")
+        for user in response.data:
+            print(user)
+        return response.data
+    else:
+        print("No user found with the provided credentials.")
+        return None
+
+
 
 def create_teacher(userName:str, password:str, email_address:str, firstName:str, lastName:str):
     response = supabase_client.table('Teacher').insert({
