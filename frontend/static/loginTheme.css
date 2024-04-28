@@ -1,62 +1,70 @@
-body, html {
-    height: 100%;
-    margin: 0;
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9; /* Light gray background */
+    color: #333; /* Dark text color */
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-    background-color: #f0f4f8;
-    color: #333;
+    height: 100vh; /* Full viewport height */
+    margin: 0;
+    padding: 0;
 }
 
 .form-container {
-    width: 60%; /* default to 60% of the window size */
-    max-width: 450px; /* maximum width of the form */
-    box-sizing: border-box; /* ensures padding doesn't affect width */
-}
-
-a:link {
-    color: #5cb85c; /* default link color */
-}
-
-a:visited {
-    color: #660099; /* color for visited links */
-}
-
-a:hover {
-    color: #FF9900; /* color when mouse hovers over the link */
-}
-
-a:active {
-    color: #FF0000; /* color when the link is clicked */
-}
-
-#signInForm {
     width: 100%;
-    background: rgb(244, 244, 244);
-    padding: 60px;
+    max-width: 400px; /* Maximum width of the form */
+    background-color: #fff; /* White background for the form */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+    padding: 40px;
+    box-sizing: border-box;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+input[type="email"],
+input[type="password"],
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    border: 1px solid #ccc; /* Light gray border */
     border-radius: 4px;
-    box-shadow: 0 4px 60px rgba(0,0,0,0.5);
-    margin: 0 auto; /* ensures form stays centered */
+    box-sizing: border-box;
 }
 
-/* ... rest of the styles ... */
+button {
+    background-color: #007bff; /* Blue button background color */
+    color: #fff; /* White text color */
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+}
 
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .form-container {
-        width: 60%; /* Adjust width to 60% for smaller screens */
+    button:hover {
+        background-color: #0056b3; /* Darker blue on hover */
     }
+
+.secondary-options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 15px;
 }
 
-@media (min-width: 769px) and (max-width: 1200px) {
-    .form-container {
-        width: 50%; /* Adjust width to 50% for medium screens */
-    }
+.new-to-site {
+    text-align: center;
+    margin-top: 20px;
 }
 
-@media (min-width: 1201px) {
-    .form-container {
-        width: 40%; /* Adjust width to 40% for large screens */
-    }
+a {
+    color: #007bff; /* Blue link color */
+    text-decoration: none;
 }
+
+    a:hover {
+        text-decoration: underline; /* Underline on hover */
+    }
