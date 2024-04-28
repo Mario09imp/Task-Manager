@@ -246,7 +246,7 @@ export function removeStudentFromClass(classID, studentID) {
 }
 
 getUsers()
-
+getUserLogin("thisPass1")
 /*const userData = {
     userName: 'Juan_dewey',
     password: 'thisPassKxL',
