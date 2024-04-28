@@ -1,3 +1,4 @@
+import dataclasses
 from flask import Blueprint, request, jsonify
 from backend import admin
 
@@ -8,6 +9,13 @@ admin_blueprint = Blueprint('admin', __name__, url_prefix='/admin')
 def get_users():
     users = admin.get_users()
     return jsonify(users)
+
+
+@admin_blueprint.route('/get_user_login', methods=['GET'])
+def get_user_login():
+    data = request.get_json()
+    result = admin.get_user_login(data['password'], data['userName'], data['email_address'])
+    return jsonify(result)
 
 
 @admin_blueprint.route('/create_student', methods=['POST'])
@@ -77,6 +85,7 @@ def delete_admin():
     return jsonify(result)
 
     # QUERIES ON CLASSES
+
 
 
 @admin_blueprint.route('/get_class', methods=['GET'])
