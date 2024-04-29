@@ -4,98 +4,106 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard</title>
-    <link rel="stylesheet" href="/frontend/static/adminTheme.css">
+    <link rel="stylesheet" href="../static/adminTheme.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha384-3pmhNheGOBUvKtLGBjiZc3wAX3a8N1b/2XHVNTmi+KIYfIXz7Z/zqRaWiYKSDWp3" crossorigin="anonymous">
 </head>
 <body>
-    <h1>Admin Dashboard</h1>
+    <header>
+        <h1>Admin Dashboard</h1>
+    </header>
 
-<section id="user-management">
-        <h2>User Management</h2>
-        <div id="filter-section" style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; padding: 10px; background-color: #f4f4f4; margin-bottom: 20px;">
-            <div>
-                <label for="filter-user-type">User Type:</label>
-                <select id="filter-user-type">
-                    <option value="all">All</option>
-                    <option value="Admin">Admin</option>
-                    <option value="Teacher">Teacher</option>
-                    <option value="Student">Student</option>
-                </select>
+    <nav>
+        <ul>
+            <li><a href="#user-management"><i class="fas fa-users"></i> User Management</a></li>
+            <li><a href="#class-management"><i class="fas fa-chalkboard"></i> Class Management</a></li>
+            <li><a href="#student-class-interaction"><i class="fas fa-user-graduate"></i> Student-Class Interaction</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <section id="user-management">
+            <h2>User Management</h2>
+            <div class="action-buttons">
+                <button class="button add-user-button">Add User</button>
+                <button class="button edit-user-button">Edit User</button>
+                <button class="button delete-user-button">Delete User</button>
             </div>
-            <div>
-                <label for="filter-username">Username:</label>
-                <input type="text" id="filter-username" placeholder="Enter username">
+            <table id="users-table">
+                <thead>
+                    <tr>
+                        <th>User Type</th>
+                        <th>User ID</th>
+                        <th>Username</th>
+                        <th>Password</th>
+                        <th>Email Address</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- User data rows will be dynamically added here -->
+                </tbody>
+            </table>
+        </section>
+
+
+        <section id="class-management">
+            <h2><i class="fas fa-chalkboard"></i> Class Management</h2>
+            <div class="action-buttons">
+                <button class="button add-class-button"><i class="fas fa-plus"></i> Add Class</button>
+                <button class="button edit-class-button"><i class="fas fa-edit"></i> Edit Class</button>
+                <button class="button delete-class-button"><i class="fas fa-trash-alt"></i> Delete Class</button>
             </div>
-            <div>
-                <label for="filter-email">Email Address:</label>
-                <input type="text" id="filter-email" placeholder="Enter email address">
+            <table id="classes-table">
+                <thead>
+                    <tr>
+                        <th>Class ID</th>
+                        <th>Class Name</th>
+                        <th>Description</th>
+                        <th>Schedule</th>
+                        <th>Teacher ID</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Class rows will be dynamically added here -->
+                </tbody>
+            </table>
+        </section>
+
+
+        <section id="student-class-interaction">
+            <h2><i class="fas fa-user-graduate"></i> Student-Class Interaction</h2>
+            <div class="action-buttons">
+                <button class="button add-student-button"><i class="fas fa-plus"></i> Add Student to Class</button>
+                <button class="button remove-student-button"><i class="fas fa-minus"></i> Remove Student from Class</button>
             </div>
-            <div>
-                <label for="filter-first-name">First Name:</label>
-                <input type="text" id="filter-first-name" placeholder="Enter first name">
-            </div>
-            <div>
-                <label for="filter-last-name">Last Name:</label>
-                <input type="text" id="filter-last-name" placeholder="Enter last name">
-            </div>
-            <div>
-                <button id="applyFiltersBtn">Apply Filters</button>
-            </div>
+            <form id="student-class-form">
+                <div class="form-group">
+                    <label for="class-id">Class ID:</label>
+                    <input type="text" id="class-id" name="class-id" placeholder="Enter Class ID" required>
+                </div>
+                <div class="form-group">
+                    <label for="student-id">Student ID:</label>
+                    <input type="text" id="student-id" name="student-id" placeholder="Enter Student ID" required>
+                </div>
+                <button type="submit" class="button submit-button">Submit</button>
+            </form>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 Admin Dashboard</p>
+            <ul class="social-links">
+                <li><a href="#"><i class="fab fa-twitter"></i></a></li>
+                <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
+                <li><a href="#"><i class="fab fa-instagram"></i></a></li>
+            </ul>
         </div>
+    </footer>
 
-        <!-- Table for displaying users -->
-        <table id="usersTable">
-            <thead>
-                <tr>
-                    <th>User Type</th>
-                    <th>User ID</th>
-                    <th>Username</th>
-                    <th>Password</th>
-                    <th>Email Address</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th><button id="addUserBtn">+</button></th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- User rows will be added here dynamically -->
-            </tbody>
-        </table>
-    </section>
-
-<section id="class-management">
-    <h2>Class Management</h2>
-    <!-- Interactive Table for Classes -->
-    <table id="classesTable">
-        <thead>
-            <tr>
-                <th>Class ID</th>
-                <th>Class Name</th>
-                <th>Description</th>
-                <th>Schedule</th>
-                <th>Teacher ID</th>
-                <th><button id="addClassBtn">+</button></th>
-            </tr>
-        </thead>
-        <tbody>
-            <!-- Class rows will be dynamically added here -->
-        </tbody>
-    </table>
-</section>
-
-
-
-<section id="student-class-interaction">
-    <h2>Student-Class Interaction</h2>
-    <form id="studentClassInteractionForm">
-        <label for="classID"></label><input type="number" id="classID" placeholder="Class ID" required>
-        <label for="studentID"></label><input type="number" id="studentID" placeholder="Student ID" required>
-        <button type="button" id="addStudentToClassBtn">Add Student to Class</button>
-        <button type="button" id="removeStudentFromClassBtn">Remove Student from Class</button>
-    </form>
-</section>
-
-
-    <!-- Link to the bundled script generated by Webpack -->
+    <script src="../work/admin.js"></script>
 
 </body>
 </html>

@@ -1,97 +1,255 @@
-/* Basic reset */
+/* Reset CSS */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Body styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
     color: #333;
     line-height: 1.6;
-    justify-content: center;
-    padding-top: 20px;
 }
 
-/* Container to center the dashboard */
-.container {
-    width: 80%;
-    max-width: 1200px;
-    margin: auto;
-    padding: 0 20px;
+/* Header styles */
+header {
+    background-color: #004080; /* Darker blue */
+    color: #fff;
+    padding: 20px;
+    text-align: center;
 }
 
-/* Styling for the dashboard sections */
+/* Navigation styles */
+nav {
+    background-color: #00264d; /* Darker blue */
+    padding: 10px 20px;
+}
+
+    nav ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+        nav ul li {
+            display: inline;
+            margin-right: 20px;
+        }
+
+            nav ul li a {
+                text-decoration: none;
+                color: #fff;
+                font-weight: bold;
+            }
+
+                nav ul li a:hover {
+                    text-decoration: underline;
+                }
+
+/* Main content styles */
+main {
+    padding: 20px;
+}
+
 section {
-    background: #fff;
-    margin: 20px 0;
+    background-color: #fff;
+    margin-bottom: 20px;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-h1, h2 {
-    padding: 10px 0;
+h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
 }
 
-/* Basic styles for the table */
-table {
+/* Footer styles */
+footer {
+    background-color: #004080; /* Darker blue */
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+}
+/* User management section styles */
+#user-management {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    #user-management h2 {
+        margin-bottom: 20px;
+        font-size: 24px;
+    }
+
+/* Action buttons styles */
+.action-buttons {
+    margin-bottom: 20px;
+}
+
+    .action-buttons .button {
+        margin-right: 10px;
+    }
+
+/* Table styles */
+#users-table {
     width: 100%;
     border-collapse: collapse;
-    margin: 20px 0;
 }
 
-table thead {
-    background-color: #333;
-    color: #fff;
-}
-
-table th, table td {
-    text-align: left;
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-}
-
-/* Responsive design for smaller screens */
-@media (max-width: 768px) {
-    .container {
-        width: 95%;
-        padding: 0 10px;
+    #users-table th,
+    #users-table td {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
     }
 
-    table th, table td {
-        padding: 8px;
-        font-size: 14px; /* Smaller font size on smaller screens */
+    #users-table th {
+        background-color: #f4f4f4;
+        text-align: left;
     }
 
-    /* On smaller screens, make table scrollable horizontally */
-    .table-responsive {
-        overflow-x: auto;
+    #users-table tbody tr:hover {
+        background-color: #f0f0f0;
     }
+/* Class Management Section */
+#class-management {
+    margin-top: 20px;
 }
 
-/* Styles for form elements */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-input[type="number"],
-textarea,
-button {
+    #class-management h2 {
+        font-size: 24px;
+        margin-bottom: 10px;
+        color: #333;
+    }
+
+.action-buttons {
+    margin-bottom: 20px;
+}
+
+    .action-buttons .button {
+        padding: 10px 20px;
+        margin-right: 10px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff; /* Blue color */
+        color: white;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+        .action-buttons .button:hover {
+            background-color: #0056b3; /* Darker blue color on hover */
+        }
+
+#classes-table {
     width: 100%;
-    padding: 10px;
+    border-collapse: collapse;
+}
+
+    #classes-table th,
+    #classes-table td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+
+    #classes-table th {
+        background-color: #f4f4f4; /* Light gray background for table headers */
+        font-weight: bold;
+        color: #333;
+    }
+/* CSS for the Student-Class Interaction section */
+#student-class-interaction {
+    margin-top: 20px;
+}
+
+.student-class-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+    .student-class-form label {
+        margin-right: 5px;
+        font-weight: bold;
+    }
+
+    .student-class-form input[type="number"] {
+        flex: 1;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+
+    .student-class-form button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .student-class-form button:hover {
+            background-color: #0056b3;
+        }
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
     margin-top: 10px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
 }
 
-button {
-    background-color: #5cb85c;
-    color: white;
-    border: none;
-    cursor: pointer;
+    .action-buttons button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .action-buttons button:hover {
+            background-color: #0056b3;
+        }
+footer {
+    background-color: #f8f9fa;
+    padding: 20px 0;
+    text-align: center;
 }
 
-button:hover {
-    opacity: 0.9;
+.footer-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+    .footer-content p {
+        margin: 0;
+        font-size: 14px;
+    }
+
+.social-links {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10px;
+}
+
+    .social-links li {
+        display: inline-block;
+        margin: 0 5px;
+    }
+
+    .social-links a {
+        color: #007bff;
+        font-size: 20px;
+        text-decoration: none;
+    }
+
+        .social-links a:hover {
+            color: #0056b3;
+        }

@@ -1,164 +1,132 @@
-import axios from 'axios';
-import fetch from 'node-fetch';
-export function getStudents(teacherID, classID = null) {
-    const baseUrl = `http://localhost:5000/teacher/get_students/${teacherID}`;
-    const url = classID ? `${baseUrl}/${classID}` : baseUrl;
+// Function to handle form submission for adding a new class
+function handleAddClassForm(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
 
-    return axios.get(url)
-        .then(response => {
-            console.log('Students data:', response.data);
-            return response.data;
-        })
-        .catch(error => {
-            console.error('Error fetching students:', error);
-            return [];
-        });
+    // Get form input values
+    const className = document.getElementById('className').value;
+    const classTeacher = document.getElementById('classTeacher').value;
+    const classSchedule = document.getElementById('classSchedule').value;
+
+    // Call the function to add the class
+    addClass(className, classTeacher, classSchedule);
+
+    // Clear the form inputs
+    document.getElementById('className').value = '';
+    document.getElementById('classTeacher').value = '';
+    document.getElementById('classSchedule').value = '';
 }
 
-export function createAssignment(classID, title, description, dueDate) {
-    const url = 'http://localhost:5000/teacher/create_assignment';
-
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            classID: classID,
-            Title: title,
-            Description: description,
-            DueDate: dueDate
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log(`Assignment created:`, result);
-    })
-    .catch(error => console.error(`Error creating assignment:`, error));
+// Function to add a new class
+function addClass(className, classTeacher, classSchedule) {
+    // Implement logic to add the class
+    // For now, let's just display an alert with the class details
+    alert(`New Class Added:\nName: ${className}\nTeacher: ${classTeacher}\nSchedule: ${classSchedule}`);
 }
 
-export function updateAssignment(assignmentID, title, description, dueDate) {
-    const url = 'http://localhost:5000/teacher/update_assignment';
+// Add event listener to the add class form
+document.getElementById('addClassForm').addEventListener('submit', handleAddClassForm);
+// Function to display classes dynamically
+function displayClasses(classes) {
+    const classListContainer = document.getElementById('classList');
+    classListContainer.innerHTML = ''; // Clear existing content
 
-    fetch(url, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            AssignmentID: assignmentID,
-            Title: title,
-            Description: description,
-            DueDate: dueDate
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log(`Assignment updated:`, result);
-    })
-    .catch(error => console.error(`Error updating assignment:`, error));
-}
-
-export function deleteAssignment(assignmentID) {
-    const url = `http://localhost:5000/teacher/delete_assignment/${assignmentID}`;
-
-    fetch(url, {
-        method: 'DELETE'
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log(`Assignment deleted:`, result);
-    })
-    .catch(error => console.error(`Error deleting assignment:`, error));
-}
-
-import axios from 'axios';
-
-export function getReminders(teacherID, reminderID) {
-    const url = `http://localhost:5000/teacher/get_reminders`;
-
-    return axios.get(url, {
-        params: {
-            teacherID: teacherID,
-            reminderID: reminderID
-        }
-    })
-    .then(response => {
-        console.log('Reminders data:', response.data);
-        return response.data;
-    })
-    .catch(error => {
-        console.error('Error fetching reminders:', error);
-        return [];
+    classes.forEach(classInfo => {
+        const classCard = document.createElement('div');
+        classCard.classList.add('class-card');
+        classCard.innerHTML = `
+            <h3>${classInfo.name}</h3>
+            <p><strong>Teacher:</strong> ${classInfo.teacher}</p>
+            <p><strong>Schedule:</strong> ${classInfo.schedule}</p>
+            <button class="drop-class-button" onclick="dropClass(${classInfo.id})">Drop Class</button>
+        `;
+        classListContainer.appendChild(classCard);
     });
 }
 
-export function createReminder(assignmentID, reminderDate, title, description) {
-    const url = 'http://localhost:5000/teacher/create_reminder';
+// Sample data for testing (replace with actual data from API)
+const sampleClasses = [
+    { id: 1, name: 'Mathematics', teacher: 'Mr. Smith', schedule: 'Mon/Wed/Fri 9:00 AM' },
+    { id: 2, name: 'English', teacher: 'Ms. Johnson', schedule: 'Tue/Thu 10:30 AM' }
+];
 
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            assignmentID: assignmentID,
-            reminderDate: reminderDate,
-            title: title,
-            description: description
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log(`Reminder created:`, result);
-    })
-    .catch(error => console.error(`Error creating reminder:`, error));
+// Display the sample classes
+displayClasses(sampleClasses);
+
+// Function to fetch student progress data from the server
+function fetchStudentProgress() {
+    // Implement logic to fetch student progress data from the server
+    // For now, let's use mock data
+    const studentProgressData = [
+        { name: 'Student 1', grade: 'A', completion: '80%' },
+        { name: 'Student 2', grade: 'B', completion: '65%' },
+        { name: 'Student 3', grade: 'C', completion: '50%' }
+    ];
+
+    // Call function to populate student progress on the page
+    populateStudentProgress(studentProgressData);
 }
 
-export function updateReminder(assignmentID, reminderDate, title, description) {
-    const url = 'http://localhost:5000/teacher/update_reminder';
+// Function to populate student progress on the page
+function populateStudentProgress(progressData) {
+    const progressList = document.getElementById('progressList');
 
-    fetch(url, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            assignmentID: assignmentID,
-            reminderDate: reminderDate,
-            title: title,
-            description: description
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log(`Reminder updated:`, result);
-    })
-    .catch(error => console.error(`Error updating reminder:`, error));
+    // Clear existing content
+    progressList.innerHTML = '';
+
+    // Iterate over the progress data and create HTML elements
+    progressData.forEach(student => {
+        const studentCard = document.createElement('div');
+        studentCard.classList.add('student-card');
+        studentCard.innerHTML = `
+            <h3>${student.name}</h3>
+            <p><strong>Grade:</strong> ${student.grade}</p>
+            <p><strong>Completion:</strong> ${student.completion}</p>
+        `;
+        progressList.appendChild(studentCard);
+    });
 }
+
+// Call the function to fetch and populate student progress data
+fetchStudentProgress();
+
+// Function to handle form submission for sending a message
+function handleSendMessageForm(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+
+    // Get form input values
+    const recipient = document.getElementById('recipient').value;
+    const message = document.getElementById('message').value;
+
+    // Call the function to send the message
+    sendMessage(recipient, message);
+
+    // Clear the message input
+    document.getElementById('message').value = '';
+}
+
+// Function to send a message
+function sendMessage(recipient, message) {
+    // Implement logic to send the message
+    // For now, let's just display the sent message
+    displaySentMessage(recipient, message);
+}
+
+// Function to display the sent message
+function displaySentMessage(recipient, message) {
+    const sentMessagesContainer = document.getElementById('sentMessages');
+
+    // Create a new message element
+    const messageElement = document.createElement('div');
+    messageElement.classList.add('sent-message');
+    messageElement.innerHTML = `
+        <p><strong>To:</strong> ${recipient}</p>
+        <p>${message}</p>
+    `;
+
+    // Add the message element to the container
+    sentMessagesContainer.appendChild(messageElement);
+}
+
+// Add event listener to the send message form
+document.getElementById('sendMessageForm').addEventListener('submit', handleSendMessageForm);
 
