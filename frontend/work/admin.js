@@ -1,267 +1,138 @@
-import axios from 'axios';
-import fetch from 'node-fetch';
-import * as url from "url";
+// Function to populate the users table with data
+function populateUsersTable(users) {
+    const usersTableBody = document.querySelector('#users-table tbody');
+    usersTableBody.innerHTML = ''; // Clear existing rows
 
-export function getUsers() {
-    const url = 'http://localhost:5000/admin/get_users';
-    return axios.get(url)
-        .then(response => console.log(response.data))
-        .catch(error => {
-            console.error('Error loading users:', error)
-            return [];
-        });
+    users.forEach(user => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${user.userType}</td>
+            <td>${user.userId}</td>
+            <td>${user.username}</td>
+            <td>${user.password}</td>
+            <td>${user.email}</td>
+            <td>${user.firstName}</td>
+            <td>${user.lastName}</td>
+        `;
+        usersTableBody.appendChild(row);
+    });
 }
 
-export function getUserLogin(credential) {
-    const { password, userName, email_address } = credentials;
-    const url = 'http://localhost:5000/admin/get_user_login';
+// Function to handle the click event for adding a user
+function handleAddUser() {
+    // Add your logic here for adding a user
+    console.log('Add user clicked');
+}
 
-    // Determine whether to use userName or email_address in the request
-    const loginData = {
-        password: password
-    };
-    if (userName) {
-        loginData.userName = userName;
-    } else if (email_address) {
-        loginData.email_address = email_address;
+// Function to handle the click event for editing a user
+function handleEditUser() {
+    // Add your logic here for editing a user
+    console.log('Edit user clicked');
+}
+
+// Function to handle the click event for deleting a user
+function handleDeleteUser() {
+    // Add your logic here for deleting a user
+    console.log('Delete user clicked');
+}
+
+// Add event listeners to the action buttons
+document.querySelector('.add-user-button').addEventListener('click', handleAddUser);
+document.querySelector('.edit-user-button').addEventListener('click', handleEditUser);
+document.querySelector('.delete-user-button').addEventListener('click', handleDeleteUser);
+
+// Sample user data (replace with data fetched from API)
+const sampleUsers = [
+    { userType: 'Admin', userId: 1, username: 'admin1', password: 'password1', email: 'admin1@example.com', firstName: 'Admin', lastName: 'One' },
+    { userType: 'Teacher', userId: 2, username: 'teacher1', password: 'password1', email: 'teacher1@example.com', firstName: 'Teacher', lastName: 'One' },
+    { userType: 'Student', userId: 3, username: 'student1', password: 'password1', email: 'student1@example.com', firstName: 'Student', lastName: 'One' }
+];
+
+// Populate the table with sample user data
+populateUsersTable(sampleUsers);
+// Function to populate the classes table with data
+function populateClassesTable(classes) {
+    const classesTableBody = document.querySelector('#classes-table tbody');
+    classesTableBody.innerHTML = ''; // Clear existing rows
+
+    classes.forEach(classInfo => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${classInfo.classID}</td>
+            <td>${classInfo.className}</td>
+            <td>${classInfo.description}</td>
+            <td>${classInfo.schedule}</td>
+            <td>${classInfo.teacherID}</td>
+        `;
+        classesTableBody.appendChild(row);
+    });
+}
+
+// Function to handle the click event for adding a class
+function handleAddClass() {
+    // Add your logic here for adding a class
+    console.log('Add class clicked');
+}
+
+// Function to handle the click event for editing a class
+function handleEditClass() {
+    // Add your logic here for editing a class
+    console.log('Edit class clicked');
+}
+
+// Function to handle the click event for deleting a class
+function handleDeleteClass() {
+    // Add your logic here for deleting a class
+    console.log('Delete class clicked');
+}
+
+// Add event listeners to the action buttons
+document.querySelector('.add-class-button').addEventListener('click', handleAddClass);
+document.querySelector('.edit-class-button').addEventListener('click', handleEditClass);
+document.querySelector('.delete-class-button').addEventListener('click', handleDeleteClass);
+
+// Sample class data (replace with data fetched from API)
+const sampleClasses = [
+    { classID: 1, className: 'Mathematics', description: 'Math class', schedule: 'Mon/Wed/Fri 9:00 AM', teacherID: 101 },
+    { classID: 2, className: 'English', description: 'English class', schedule: 'Tue/Thu 10:30 AM', teacherID: 102 }
+];
+
+// Populate the table with sample class data
+populateClassesTable(sampleClasses);
+
+// Function to handle form submission for student-class interaction
+function handleStudentClassForm(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
+
+    // Get form input values
+    const classID = document.getElementById('class-id').value;
+    const studentID = document.getElementById('student-id').value;
+
+    // Call the function to add or remove student from class based on the button clicked
+    if (event.submitter.classList.contains('add-student-button')) {
+        addStudentToClass(classID, studentID);
+    } else if (event.submitter.classList.contains('remove-student-button')) {
+        removeStudentFromClass(classID, studentID);
     }
 
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(loginData)
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Login failed, network response was not ok');
-        }
-        return response.json();
-    })
-    .then(user => {
-        console.log('Login successful:', user);
-        // Perform actions with the user data after successful login, e.g., redirection or session initiation
-    })
-    .catch(error => console.error('Error during login:', error));
+    // Clear the form inputs
+    document.getElementById('class-id').value = '';
+    document.getElementById('student-id').value = '';
 }
 
-
-export function createUser(userType, userData) {
-    const url = `http://localhost:5000/admin/create_${userType.toLowerCase()}`;  // Make sure to provide the full URL
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            userName: userData.userName,
-            password: userData.password,
-            email_address: userData.email_address,
-            firstName: userData.firstName,
-            lastName: userData.lastName
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log(`${userType} created:`, result);
-        console.log(`${userType} created successfully!`); // Replaced alert with console.log for Node.js environment
-    })
-    .catch(error => console.error(`Error creating ${userType}:`, error));
+// Function to add a student to a class
+function addStudentToClass(classID, studentID) {
+    // Implement logic to add the student to the class
+    // For now, let's just display an alert with the class and student IDs
+    alert(`Added student ${studentID} to class ${classID}`);
 }
 
-export function updateUser(userType, userID, userData) {
-    const url = `http://localhost:5000/admin/update_${userType.toLowerCase()}/${userID}`;  // Make sure to provide the full URL
-    fetch(url, {
-        method: 'PUT',  // Use PUT method for updating
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            userName: userData.userName,  // Assuming you allow updating username
-            password: userData.password,  // Consider safety implications of sending passwords like this
-            email_address: userData.email_address,
-            firstName: userData.firstName,
-            lastName: userData.lastName
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log(`${userType} updated:`, result);
-        console.log(`${userType} updated successfully!`); // Replaced alert with console.log for Node.js environment
-    })
-    .catch(error => console.error(`Error updating ${userType}:`, error));
+// Function to remove a student from a class
+function removeStudentFromClass(classID, studentID) {
+    // Implement logic to remove the student from the class
+    // For now, let's just display an alert with the class and student IDs
+    alert(`Removed student ${studentID} from class ${classID}`);
 }
 
-export function deleteUser(userID, userType) {
-    const url = `/admin/delete_${userType.toLowerCase()}/${userID}`;
-    fetch(url, {
-        method: 'DELETE'
-    })
-    .then(response => {
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
-    }
-    return response.json()
-    })
-    .then(result => {
-        console.log(`${userType} deleted succesfully`, result);
-    })
-    .catch(error => console.error('Error deleting teacher:', error));
-}
-
-export function getClass() {
-    const url = 'admin/get_class';
-    axios.get(url)
-        .then(response => console.log(response.data))
-        .catch(error => console.error('Error loading classes:', error))
-}
-
-export function createClass(classData) {
-    const url = `http://localhost:5000/create_class}`;
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify( {
-            className: classData.className,
-            description: classData.description,
-            schedule: classData.schedule,
-            teacherID: classData.teacherID
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log('Class created:', result)
-    })
-    .catch(error => console.error('Error creating class:', error));
-}
-
-export function updateClass(classID, classData) {
-    const url = `http://localhost:5000/admin/update_class`;
-    fetch(url, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            classID: classData.classID,
-            className: classData.className,
-            description: classData.description,
-            schedule: classData.schedule,
-            teacherID: classData.teacherID
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log('Class updated:', result);
-    })
-    .catch(error => console.error('Error updating class:', error));
-}
-
-export function deleteClass(classID) {
-    const url = `/admin/delete_class?classID=${classID}`;
-    fetch(url,{
-        method: 'DELETE'
-    })
-    .then(response => {
-    if (!response.ok) {
-        throw new Error('Network response was not ok');
-    }
-    return response.json()
-    })
-    .then(result => {
-        console.log('Class deleted succesfully', result);
-    })
-    .catch(error => console.error('Error deleting class:', error));
-}
-
-export function addStudentToClass(classID, studentID) {
-    const url = 'http://localhost:5000/admin/add_student_to_class';
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            classID: classID,
-            studentID: studentID
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log('Student added:', result);
-    })
-    .catch(error => console.error('Error adding student:', error));
-}
-
-export function removeStudentFromClass(classID, studentID) {
-    const url = '/admin//localhost:5000/admin/remove_student_from_class';
-    fetch(url, {
-        method: 'DELETE',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            classID: classID,
-            studentID: studentID
-        })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log('Student removed:', result);
-    })
-    .catch(error => console.error('Error removing student:', error));
-}
-
-getUsers()
-getUserLogin("thisPass1")
-/*const userData = {
-    userName: 'Juan_dewey',
-    password: 'thisPassKxL',
-    email_address: 'juan.dwy@dmail.com',
-    firstName: 'Juan',
-    lastName: 'Dewey'
-};
-//createUser('Admin', userData);    //This function works
-const userData = {
-    userName: 'Juan_dewey2',
-    password: 'thisPassKxLx',
-    email_address: 'juan.dwy@dmail.com',
-    firstName: 'Juan',
-    lastName: 'Dewey'
-};
-//updateUser('Admin', 4, userData)  //This function works
-
- */
+// Add event listener to the student-class interaction form
+document.getElementById('student-class-form').addEventListener('submit', handleStudentClassForm);

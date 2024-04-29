@@ -3,11 +3,13 @@
     "",
     "\\.idea",
     "\\.idea\\inspectionProfiles",
+    "\\backend",
     "\\backend\\blueprints",
     "\\frontend",
     "\\frontend\\static",
     "\\frontend\\templates",
     "\\frontend\\work"
   ],
+  "SelectedNode": "\\frontend\\templates\\student_dashboard.html",
   "PreviewInSolutionExplorer": false
 }

@@ -4,41 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Teacher Dashboard</title>
-    <link rel="stylesheet" href="/frontend/static/teacherTheme.css">
+    <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="../static/teacherTheme.css">
 </head>
 <body>
     <header>
         <h1>Teacher Dashboard</h1>
     </header>
     <nav>
-        <ul>
-            <li><a href="#class-management">Class Management</a></li>
+        <ul class="navigation-menu">
+            <li><a href="#class-management">Manage Classes</a></li>
             <li><a href="#student-progress">Student Progress</a></li>
             <li><a href="#communications">Communications</a></li>
         </ul>
     </nav>
     <section id="class-management">
         <h2>Manage Classes</h2>
-        <!-- Class management functionalities -->
-        <button onclick="addClass()">Add New Class</button>
-        <!-- More UI elements for class management can be added here -->
-    </section>
-    <section id="student-progress">
-        <h2>View Student Progress</h2>
-        <!-- UI for viewing student progress -->
-        <div id="progressList">
-            <!-- Dynamically generated content for student progress -->
+        <!-- Form to add a new class -->
+        <form id="addClassForm">
+            <label for="className">Class Name:</label>
+            <input type="text" id="className" name="className" required>
+            <label for="classTeacher">Teacher:</label>
+            <input type="text" id="classTeacher" name="classTeacher" required>
+            <label for="classSchedule">Schedule:</label>
+            <input type="text" id="classSchedule" name="classSchedule" required>
+            <input type="submit" value="Add Class">
+        </form>
+        <!-- Class list -->
+        <div id="classList">
+            <!-- Dynamic content for class list will be added here -->
         </div>
     </section>
+
+    <section id="student-progress">
+        <h2>View Student Progress</h2>
+        <div id="progressList">
+            <!-- Student progress will be displayed here -->
+        </div>
+    </section>
+
     <section id="communications">
         <h2>Communications</h2>
-        <!-- UI for communications -->
-        <button onclick="sendMessage()">Send Message</button>
-        <!-- More UI elements for communications can be added here -->
+        <form id="sendMessageForm">
+            <label for="recipient">Recipient:</label>
+            <select id="recipient" name="recipient">
+                <!-- Options for selecting recipients will be dynamically populated -->
+            </select>
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" rows="4" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+        <!-- Container for displaying sent messages -->
+        <div id="sentMessages">
+            <!-- Sent messages will be displayed here -->
+        </div>
     </section>
     <footer>
         Teacher Dashboard © 2024
     </footer>
-    <script src="teacher.js"></script>
+    <script src="../work/teacher.js"></script>
+
 </body>
 </html>

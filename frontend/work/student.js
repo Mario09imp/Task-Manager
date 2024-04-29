@@ -1,6 +1,7 @@
 import axios from 'axios';
 import fetch from 'node-fetch';
 
+// Function to get classes
 export function getClasses() {
     const url = 'http://localhost:5000/student/get_classes';
 
@@ -15,6 +16,7 @@ export function getClasses() {
         });
 }
 
+// Function to drop a class
 export function dropClass(studentID, classID) {
     const url = 'http://localhost:5000/student/drop_class';
 
@@ -28,205 +30,221 @@ export function dropClass(studentID, classID) {
             classID: classID
         })
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log(`Class dropped:`, result);
-    })
-    .catch(error => console.error(`Error dropping class:`, error));
-}
-
-export function getReminder(reminderID = null) {
-    const url = new URL('http://localhost:5000/student/get_reminder');
-
-    // Add the reminderID as a query parameter if provided
-    if (reminderID !== null) {
-        url.searchParams.append('reminderID', reminderID);
-    }
-
-    return axios.get(url.toString())
         .then(response => {
-            console.log('Reminder data:', response.data);
-            return response.data;
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
         })
-        .catch(error => {
-            console.error('Error fetching reminder:', error);
-            return {};
-        });
+        .then(result => {
+            console.log(`Class dropped:`, result);
+        })
+        .catch(error => console.error(`Error dropping class:`, error));
 }
 
-export function createReminder(assignmentID, reminderDate, title, description) {
-    const url = 'http://localhost:5000/student/create_reminder';
+// Function to fetch tasks from the server
+function fetchTasks() {
+    // Implement logic to fetch tasks from the server
+    // For now, let's use mock data
+    const tasks = [
+        { id: 1, title: 'Complete Assignment 1', description: 'Finish assignment 1 before the deadline', dueDate: '2024-05-10', status: 'Incomplete' },
+        { id: 2, title: 'Study for Test', description: 'Review study materials for the upcoming test', dueDate: '2024-05-15', status: 'Incomplete' }
+    ];
+    populateTasks(tasks);
+}
+
+// Function to populate tasks on the page
+function populateTasks(tasks) {
+    const tasksContainer = document.getElementById('tasks');
+    tasksContainer.innerHTML = ''; // Clear existing content
+
+    tasks.forEach(task => {
+        const taskCard = document.createElement('div');
+        taskCard.classList.add('task-card');
+        taskCard.innerHTML = `
+            <h3>${task.title}</h3>
+            <p><strong>Description:</strong> ${task.description}</p>
+            <p><strong>Due Date:</strong> ${task.dueDate}</p>
+            <p><strong>Status:</strong> ${task.status}</p>
+            <button onclick="editTask(${task.id})">Edit</button>
+            <button onclick="deleteTask(${task.id})">Delete</button>
+        `;
+        tasksContainer.appendChild(taskCard);
+    });
+}
+
+// Call the function to fetch tasks and populate them on the page
+fetchTasks();
+
+// Function to fetch reminders from the server
+function fetchReminders() {
+    // Implement logic to fetch reminders from the server
+    // For now, let's use mock data
+    const reminders = [
+        { id: 1, title: 'Assignment Due', date: '2024-05-05', description: 'Complete assignment 3' },
+        { id: 2, title: 'Test Reminder', date: '2024-05-10', description: 'Prepare for the upcoming test' }
+    ];
+    displayReminders(reminders);
+}
+
+// Function to display reminders on the page
+function displayReminders(reminders) {
+    const reminderList = document.getElementById('reminder-list');
+    reminderList.innerHTML = ''; // Clear existing content
+
+    reminders.forEach(reminder => {
+        const reminderCard = document.createElement('div');
+        reminderCard.classList.add('reminder-card');
+        reminderCard.innerHTML = `
+            <h3>${reminder.title}</h3>
+            <p><strong>Date:</strong> ${reminder.date}</p>
+            <p><strong>Description:</strong> ${reminder.description}</p>
+            <button onclick="editReminder(${reminder.id})">Edit</button>
+            <button onclick="deleteReminder(${reminder.id})">Delete</button>
+        `;
+        reminderList.appendChild(reminderCard);
+    });
+}
+
+// Function to add a new reminder
+function addReminder(reminder) {
+    const url = 'http://localhost:5000/student/add_reminder';
 
     fetch(url, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            assignmentID: assignmentID,
-            reminderDate: reminderDate,
-            title: title,
-            description: description
+        body: JSON.stringify(reminder)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to add reminder');
+            }
+            return response.json();
         })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log(`Reminder created:`, result);
-    })
-    .catch(error => console.error(`Error creating reminder:`, error));
+        .then(result => {
+            console.log('Reminder added:', result);
+            // Optionally, you can perform additional actions after adding the reminder
+        })
+        .catch(error => {
+            console.error('Error adding reminder:', error);
+        });
 }
 
-export function updateReminder(assignmentID, reminderDate, title, description) {
-    const url = 'http://localhost:5000/student/update_reminder';
+// Function to edit an existing reminder
+function editReminder(reminderId, updatedReminder) {
+    const url = `http://localhost:5000/student/edit_reminder/${reminderId}`;
 
     fetch(url, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({
-            assignmentID: assignmentID,
-            reminderDate: reminderDate,
-            title: title,
-            description: description
+        body: JSON.stringify(updatedReminder)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to edit reminder');
+            }
+            return response.json();
         })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log(`Reminder updated:`, result);
-    })
-    .catch(error => console.error(`Error updating reminder:`, error));
+        .then(result => {
+            console.log('Reminder edited:', result);
+            // Optionally, you can perform additional actions after editing the reminder
+        })
+        .catch(error => {
+            console.error('Error editing reminder:', error);
+        });
 }
 
-export function deleteReminder(reminderID) {
-    const url = new URL('http://localhost:5000/student/delete_reminder');
-    url.searchParams.append('reminderID', reminderID);
+// Function to delete an existing reminder
+function deleteReminder(reminderId) {
+    const url = `http://localhost:5000/student/delete_reminder/${reminderId}`;
 
-    fetch(url.toString(), {
+    fetch(url, {
         method: 'DELETE'
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log(`Reminder deleted:`, result);
-    })
-    .catch(error => console.error(`Error deleting reminder:`, error));
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to delete reminder');
+            }
+            return response.json();
+        })
+        .then(result => {
+            console.log('Reminder deleted:', result);
+            // Optionally, you can perform additional actions after deleting the reminder
+        })
+        .catch(error => {
+            console.error('Error deleting reminder:', error);
+        });
 }
 
-import axios from 'axios';
+// Function to initialize the reminders section
+function initReminders() {
+    fetchReminders();
+}
 
-export function getTask(taskID = null) {
-    const url = new URL('http://localhost:5000/student/get_task');
+// Call the function to initialize the reminders section
+initReminders();
 
-    // Append the taskID as a query parameter if provided
-    if (taskID !== null) {
-        url.searchParams.append('taskID', taskID);
-    }
+// Function to get student profile
+export function getProfile(studentID) {
+    const url = 'http://localhost:5000/student/get_profile';
 
-    return axios.get(url.toString())
+    return axios.get(url, {
+        params: {
+            studentID: studentID
+        }
+    })
         .then(response => {
-            console.log('Task data:', response.data);
+            console.log('Profile data:', response.data);
             return response.data;
         })
         .catch(error => {
-            console.error('Error fetching task:', error);
+            console.error('Error fetching profile:', error);
             return {};
         });
 }
 
-export function createTask(title, description, dueDate, status, studentID) {
-    const url = 'http://localhost:5000/student/create_task';
+// Function to populate profile information
+function populateProfile(profile) {
+    const profileContainer = document.getElementById('profile');
 
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            title: title,
-            description: description,
-            dueDate: dueDate,  // Ensure this is in 'YYYY-MM-DD' format
-            status: status,
-            studentID: studentID
+    const fullName = document.createElement('h2');
+    fullName.textContent = `${profile.firstName} ${profile.lastName}`;
+
+    const email = document.createElement('p');
+    email.textContent = `Email: ${profile.email}`;
+
+    const editButton = document.createElement('button');
+    editButton.textContent = 'Edit Profile';
+    editButton.addEventListener('click', () => {
+        // Logic to edit profile goes here
+    });
+
+    profileContainer.appendChild(fullName);
+    profileContainer.appendChild(email);
+    profileContainer.appendChild(editButton);
+}
+
+// On page load, fetch profile and populate profile information
+document.addEventListener('DOMContentLoaded', () => {
+    const studentID = ''; // Set the student ID here
+
+    getProfile(studentID)
+        .then(profile => {
+            populateProfile(profile);
         })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log(`Task created:`, result);
-    })
-    .catch(error => console.error(`Error creating task:`, error));
-}
+        .catch(error => {
+            console.error('Error fetching profile:', error);
+        });
 
-export function updateTask(taskID, title, description, dueDate, status) {
-    const url = 'http://localhost:5000/student/update_task';
-
-    fetch(url, {
-        method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            taskID: taskID,
-            title: title,
-            description: description,
-            dueDate: dueDate,  // Ensure this is in 'YYYY-MM-DD' format
-            status: status
+    getClasses()
+        .then(classes => {
+            populateClassCards(classes);
         })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log(`Task updated:`, result);
-    })
-    .catch(error => console.error(`Error updating task:`, error));
-}
-
-export function deleteTask(taskID) {
-    const url = 'http://localhost:5000/student/delete_task';
-
-    fetch(url, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ taskID: taskID })
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    })
-    .then(result => {
-        console.log(`Task deleted:`, result);
-    })
-    .catch(error => console.error(`Error deleting task:`, error));
-}
+        .catch(error => {
+            console.error('Error fetching classes:', error);
+        });
+});
